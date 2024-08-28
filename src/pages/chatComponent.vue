@@ -19,7 +19,9 @@ import { watchEffect, onMounted, onBeforeUnmount } from 'vue'
 import wrapperComponent from '../components/wrapperComponent.vue';
 import { profiles } from '../../data/profiles';
 import socket from '../socket/index.js'
+import { useDataStore } from '../store';
 
+const store = useDataStore()
 
 onMounted(() => {
    socket.onopen = () => {
@@ -28,17 +30,18 @@ onMounted(() => {
          method: 'connection',
          user: JSON.parse(sessionStorage.getItem('userProfile'))
       }))
-      socket.send(JSON.stringify({
-         method: 'users'
-      }))
    }
 
    socket.onmessage = (msg) => {
       const parsedMessage = JSON.parse(msg.data)
 
       switch (parsedMessage.method) {
-         case 'users':
-            console.log(parsedMessage);
+         case 'connection':
+            store.setOnlineUsers(parsedMessage.users)
+            console.log('User ', parsedMessage.user.name, ' connected');
+            break;
+         case 'disconnection':
+            store.setOnlineUsers(parsedMessage.users)
             break;
       
          default:
@@ -50,8 +53,10 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
    socket.send(JSON.stringify({
-      method: 'disconnection'
+      method: 'disconnection',
+      user: store.$state.user
    }))
+   store.userLogout()
 })
 </script>
 

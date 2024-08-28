@@ -20,7 +20,6 @@ const store = useDataStore()
 
 function selectProfile(profile){
    store.userLogin(profile)
-   console.log(sessionStorage.getItem('userProfile'))
    router.push('/chat')
 }
 </script>

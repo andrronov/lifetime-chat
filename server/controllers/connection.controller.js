@@ -8,14 +8,25 @@ class ConnectionController {
       this.connections.set(ws.id, message.user)
       const messageAPI = {
          method: 'connection',
-         user: message.user
+         user: message.user,
+         users: Object.values(Object.fromEntries(this.connections)).map(user => user.id)
+      }
+      this.broadcastEvent(aWss, ws, messageAPI)
+   }
+   deleteConnection(aWss, ws, message){
+      ws.id = null
+      this.connections.delete(message.user.id)
+      const messageAPI = {
+         method: 'disconnection',
+         users: Object.values(Object.fromEntries(this.connections)).map(user => user.id)
       }
       this.broadcastEvent(aWss, ws, messageAPI)
    }
 
    broadcastEvent(aWss, ws, message){
       aWss.clients.forEach(client => {
-         if(client.id === ws.id) client.send(JSON.stringify(message))
+         // if(client.id === ws.id) client.send(JSON.stringify(message))
+         client.send(JSON.stringify(message))
       })
    }
 
@@ -31,6 +42,10 @@ class ConnectionController {
                method: 'users',
                users: Object.fromEntries(this.connections.entries())
             }))
+            break;
+            
+         case 'disconnection':
+            this.deleteConnection(aWss, ws, message)
             break;
       
          default:

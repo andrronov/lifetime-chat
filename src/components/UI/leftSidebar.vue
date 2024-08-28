@@ -11,7 +11,7 @@
            <template v-slot:name>
              {{ profile.name }}
            </template>
-           <!-- <div class="w-3 h-3 rounded-full bg-green-500"></div> -->
+           <div class="w-3 h-3 rounded-full" :class="store.$state.onlineUsers.includes(index) ? 'bg-green-500' : 'bg-gray-800'"></div>
          </sidebarTab>
        </div>
  
@@ -38,10 +38,12 @@
 
 <script setup>
 import sidebarTab from './sidebar/sidebarTab.vue';
+import { useDataStore } from '../../store';
 import { useRoute } from 'vue-router';
 import { profiles } from '../../../data/profiles';
 import { computed } from 'vue';
 
+const store = useDataStore()
 const route = useRoute()
 const userId = computed(() => {
   const user = JSON.parse(sessionStorage.getItem('userProfile'))

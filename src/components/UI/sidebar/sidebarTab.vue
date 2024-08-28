@@ -1,6 +1,6 @@
 <template>
    <div v-if="isVisible">
-      <router-link :to="link" :class="isActive" class="flex flex-row justify-start border-y-2 border-black dark:border-white hover:font-bold items-center w-full p-3 gap-2">
+      <router-link :to="link" :class="isActive" class="flex flex-row justify-between border-y-2 border-black dark:border-white hover:font-bold items-center w-full p-3 gap-2">
         <div>
           <slot name="icon"></slot>
         </div>
