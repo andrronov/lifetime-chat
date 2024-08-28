@@ -13,11 +13,14 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { profiles } from '../../data/profiles.js'
+import { useDataStore } from '../store/index.js'
 
 const router = useRouter()
+const store = useDataStore()
 
 function selectProfile(profile){
-   sessionStorage.setItem('userProfile', JSON.stringify(profile))
+   store.userLogin(profile)
+   console.log(sessionStorage.getItem('userProfile'))
    router.push('/chat')
 }
 </script>

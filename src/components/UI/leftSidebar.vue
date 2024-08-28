@@ -4,13 +4,14 @@
          Lifetime chat
       </h1>
       <div class="mt-2 space-y-3">
-        <sidebarTab :active="route.path == `/chat/${index}`" :link="`/chat/${index}`" v-for="(profile, index) in profiles" :key="index">
+        <sidebarTab :is-visible="userId !== index" :active="route.path == `/chat/${index}`" :link="`/chat/${index}`" v-for="(profile, index) in profiles" :key="index">
            <template v-slot:icon>
              <img :src="profile.img" class="w-10 h-10" alt="avatar">
            </template>
            <template v-slot:name>
              {{ profile.name }}
            </template>
+           <!-- <div class="w-3 h-3 rounded-full bg-green-500"></div> -->
          </sidebarTab>
        </div>
  
@@ -39,6 +40,11 @@
 import sidebarTab from './sidebar/sidebarTab.vue';
 import { useRoute } from 'vue-router';
 import { profiles } from '../../../data/profiles';
+import { computed } from 'vue';
 
 const route = useRoute()
+const userId = computed(() => {
+  const user = JSON.parse(sessionStorage.getItem('userProfile'))
+  return user.id
+})
 </script>
