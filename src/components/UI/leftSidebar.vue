@@ -1,17 +1,17 @@
 <template>
    <div class="flex flex-col h-screen border-r-2 border-black dark:border-white">
-      <h1 class="pishi p-1 my-1 text-black dark:text-white xs:text-xl sm:text-2xl text-center hover:text-gray-800">
+      <h1 class="pishi p-1 my-1 text-black break-words dark:text-white text-sm xs:text-xl sm:text-2xl text-center hover:text-gray-800">
          Lifetime chat
       </h1>
-      <div class="mt-2 space-y-3">
+      <div class="mt-2 space-y-3 overflow-y-auto">
         <sidebarTab :is-visible="userId !== index" :active="route.path == `/chat/${index}`" :link="`/chat/${index}`" v-for="(profile, index) in profiles" :key="index">
            <template v-slot:icon>
-             <img :src="profile.img" class="w-10 h-10" alt="avatar">
+             <img :src="profile.img" class="w-8 h-8 sm:w-10 sm:h-10" alt="avatar">
            </template>
            <template v-slot:name>
              {{ profile.name }}
            </template>
-           <div class="w-3 h-3 rounded-full" :class="store.$state.onlineUsers.includes(index) ? 'bg-green-500' : 'bg-gray-800'"></div>
+           <div class="w-3 h-3 rounded-full hidden sm:block" :class="store.$state.onlineUsers.includes(index) ? 'bg-green-500' : 'bg-gray-800'"></div>
          </sidebarTab>
        </div>
  

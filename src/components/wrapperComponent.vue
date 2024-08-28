@@ -13,7 +13,7 @@ onMounted(() => {
    <div :class="{'dark': lightMode}">
       <div class="bg-indigo-200 dark:text-white dark:bg-indigo-800">
          <div class="min-h-full">
-            <div class="grid grid-cols-12 mx-auto gap-1 lg:max-w-7xl lg:gap-0">
+            <div class="grid grid-cols-12 mx-auto gap-0">
                <!-- left sidebar -->
                <div class="md:block col-span-2 xs:col-span-1 sm:col-span-2">
                   <div class="sticky top-0">
