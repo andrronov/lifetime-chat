@@ -1,23 +1,23 @@
 <template>
   <wrapperComponent>
    <div class="flex flex-col h-screen justify-between">
-      <div v-if="$route.params.id" class="flex flex-row items-center justify-center gap-4 h-[66.5px] border-b-2 border-black bg-white text-black w-full">
+      <div v-if="$route.params.id" class="flex flex-row items-center justify-center gap-4 h-[66.5px] border-b-2 border-black bg-white dark:bg-indigo-950 dark:text-white text-black w-full">
          <img :src="profiles[$route.params.id].img" class="w-10 h-10" alt="avatar">
          <p class="text-xl font-medium">{{ profiles[$route.params.id].name }}</p>
-         <div class="w-3 h-3 rounded-full " :class="isOnline ? 'bg-green-500' : 'bg-gray-800'"></div>
+         <onlineIndicator :is-online="isOnline" />
       </div>
 
-      <div v-if="$route.params.id" class="h-full w-full flex flex-col-reverse overflow-y-auto bg-gradient-to-r from-indigo-300 to-green-300">
+      <div v-if="$route.params.id" class="h-full w-full flex flex-col-reverse overflow-y-auto bg-gradient-to-r from-indigo-300 to-green-300 dark:bg-gradient-to-r dark:from-indigo-800 dark:to-green-800">
          <p v-for="(msg, index) in 12" :key="index"
-            class="p-2 my-2 border border-black bg-indigo-700 text-white h-auto mx-px break-words max-w-[210px] xs:max-w-[395px] sm:max-w-2xl"
-            :class="index % 2 == 0 ? 'bg-indigo-700 self-start' : 'bg-green-700 self-end'">
-            Message wassup niggaaaaaaasadsadsadsafksdkfjejfiefjewoijioewjfoiejosadkslfdmlkdsfklsdlfkskdfkldsfsdfsamdslfdslfkldsfklkldfdsf
+            class="p-2 my-2 border border-black text-white h-auto mx-px break-words max-w-[210px] xs:max-w-[395px] sm:max-w-2xl"
+            :class="index % 2 == 0 ? 'bg-green-700 self-start' : 'bg-indigo-700 self-end'">
+            Message {{ msg }}
          </p>
       </div>
 
       <div v-if="$route.params.id" class="flex flex-row items-center">
-         <input type="text" class="w-full p-1.5 border border-t-black" placeholder="Введите сообщение..." />
-         <button class="p-1.5 border border-t-black hover:bg-white">Отправить</button>
+         <input type="text" class="w-full p-2 text-black border-t border-black outline-none focus:border-none" placeholder="Введите сообщение..." />
+         <button class="p-2 border-t border-black hover:bg-gray-200 dark:hover:bg-gray-800">Отправить</button>
       </div>
 
       <div v-else class="my-auto self-center">
@@ -30,6 +30,7 @@
 <script setup>
 import { watchEffect, onMounted, onBeforeUnmount, computed, ref } from 'vue'
 import wrapperComponent from '../components/wrapperComponent.vue';
+import onlineIndicator from '../components/UI/onlineIndicator.vue'
 import { profiles } from '../../data/profiles';
 import socket from '../socket/index.js'
 import { useDataStore } from '../store';

@@ -1,7 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import leftSidebar from './UI/leftSidebar.vue';
+
 const lightMode = ref(false)
+const showModal = ref(false)
 
 onMounted(() => {
    const localData = localStorage.getItem('userTheme')
@@ -10,6 +12,22 @@ onMounted(() => {
 </script>
 
 <template>
+   <transition>
+      <div v-if="showModal" class="fixed z-50 inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+         <div class="bg-white p-4 rounded-lg">
+            <p class="mb-4">Хотите поменять цветовую тему?</p>
+            <div class="flex justify-between">
+               <button @click="lightMode = !lightMode; showModal = false" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                  Да
+               </button>
+               <button @click="showModal = false" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                  Нет
+               </button>
+            </div>
+         </div>
+      </div>
+   </transition>
+
    <div :class="{'dark': lightMode}">
       <div class="bg-indigo-200 dark:text-white dark:bg-indigo-800">
          <div class="min-h-full">
@@ -17,7 +35,7 @@ onMounted(() => {
                <!-- left sidebar -->
                <div class="md:block col-span-2 xs:col-span-1 sm:col-span-2">
                   <div class="sticky top-0">
-                     <leftSidebar />
+                     <leftSidebar @open-modal="showModal = true" />
                   </div>
                </div>
  
@@ -31,3 +49,15 @@ onMounted(() => {
       </div>
    </div>
 </template>
+
+<style>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>
