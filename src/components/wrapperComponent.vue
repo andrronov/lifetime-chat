@@ -5,6 +5,10 @@ import leftSidebar from './UI/leftSidebar.vue';
 const lightMode = ref(false)
 const showModal = ref(false)
 
+function changeTheme(){
+   lightMode.value = !lightMode.value; showModal.value = false; localStorage.setItem('userTheme', JSON.stringify(lightMode.value))
+}
+
 onMounted(() => {
    const localData = localStorage.getItem('userTheme')
    if(localData) lightMode.value = JSON.parse(localData)
@@ -17,7 +21,7 @@ onMounted(() => {
          <div class="bg-white p-4 rounded-lg">
             <p class="mb-4">Хотите поменять цветовую тему?</p>
             <div class="flex justify-between">
-               <button @click="lightMode = !lightMode; showModal = false" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+               <button @click="changeTheme" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                   Да
                </button>
                <button @click="showModal = false" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">

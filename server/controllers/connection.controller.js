@@ -25,7 +25,6 @@ class ConnectionController {
 
    broadcastEvent(aWss, ws, message){
       aWss.clients.forEach(client => {
-         // if(client.id === ws.id) client.send(JSON.stringify(message))
          client.send(JSON.stringify(message))
       })
    }

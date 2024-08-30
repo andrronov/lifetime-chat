@@ -11,7 +11,7 @@
            <template v-slot:name>
              {{ profile.name }}
            </template>
-           <onlineIndicator :is-online="store.$state.onlineUsers.includes(index)" />
+           <onlineIndicator class="hidden sm:block" :is-online="store.$state.onlineUsers.includes(index)" />
          </sidebarTab>
          
         <sidebarTab @click="$emit('openModal')" :is-visible="true" :active="false" :link="`/chat`">
