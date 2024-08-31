@@ -3,11 +3,12 @@ import expressWs from 'express-ws'
 import ConnectionController from './controllers/connection.controller.js';
 import MessageController from './controllers/message.controller.js';
 
+const PORT = process.env.PORT || 9999
 const app = express()
 const { getWss, app: wsApp } = expressWs(app)
 const aWss = getWss()
 
-// app.use(express.static('dist'))
+app.use(express.static('dist'))
 
 wsApp.ws('/', (ws, res) => {
    ws.on('message', (msg) => {
@@ -23,6 +24,9 @@ wsApp.ws('/', (ws, res) => {
             break;
       }
    })
+   ws.on('close', () => {
+      ConnectionController.deleteConnection(aWss, ws, {user: {id: ws.id}})
+   })
 })
 
-app.listen('5172', () => console.log('works on 5172'))
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
