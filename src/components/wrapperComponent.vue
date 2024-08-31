@@ -1,13 +1,18 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import leftSidebar from './UI/leftSidebar.vue';
+
 
 const lightMode = ref(false)
 const showModal = ref(false)
+const router = useRouter()
 
 function changeTheme(){
    lightMode.value = !lightMode.value; showModal.value = false; localStorage.setItem('userTheme', JSON.stringify(lightMode.value))
 }
+function exit(){window.location.reload(); router.push('/')}
+
 
 onMounted(() => {
    const localData = localStorage.getItem('userTheme')
@@ -39,7 +44,7 @@ onMounted(() => {
                <!-- left sidebar -->
                <div class="md:block col-span-2 xs:col-span-1 sm:col-span-2">
                   <div class="sticky top-0">
-                     <leftSidebar @open-modal="showModal = true" />
+                     <leftSidebar @open-modal="showModal = true" @exit="exit" />
                   </div>
                </div>
  

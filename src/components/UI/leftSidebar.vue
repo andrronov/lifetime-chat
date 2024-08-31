@@ -23,6 +23,15 @@
            </template>
            <p></p>
          </sidebarTab>
+        <sidebarTab @click="$emit('exit')" :is-visible="true" :active="false" :link="`/chat`">
+           <template v-slot:icon>
+             <img src="/icons/exit.svg" class="w-8 h-8 sm:w-10 sm:h-10" alt="icon">
+           </template>
+           <template v-slot:name>
+             Выход
+           </template>
+           <p></p>
+         </sidebarTab>
        </div>
  
       <div class="flex flex-row items-center justify-center mt-auto mb-5 xs:w-full dark:hover:bg-gray-800 dark:hover:text-gray-300 hover:bg-gray-400">

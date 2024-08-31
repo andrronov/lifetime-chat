@@ -7,8 +7,6 @@ export const useDataStore = defineStore('data', {
       user: JSON.parse(sessionStorage.getItem('userProfile')) || null
    }),
 
-   getters: {},
-
    actions: {
       setOnlineUsers(arr){
          this.onlineUsers = arr
@@ -19,6 +17,7 @@ export const useDataStore = defineStore('data', {
       },
       userLogout(){
          sessionStorage.removeItem('userProfile')
+         sessionStorage.removeItem('userPin')
          this.user = null
       },
       setMessages(messages){
@@ -28,7 +27,6 @@ export const useDataStore = defineStore('data', {
          if(!this.chatMessages[chatId]){
             this.chatMessages[chatId] = [message]
          } else {
-            console.log(this.chatMessages[chatId], this.chatMessages);
             this.chatMessages[chatId].push(message)
          }
       }

@@ -18,6 +18,7 @@ const routes = [
    },
    {
       path: '/:pathMatch(.*)*',
+      name: 'error',
       component: () => import('../pages/errorPage.vue')
    }
 ]
