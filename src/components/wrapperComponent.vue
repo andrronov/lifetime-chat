@@ -12,7 +12,7 @@ const router = useRouter()
 function changeTheme(){
    lightMode.value = !lightMode.value; showModal.value = false; localStorage.setItem('userTheme', JSON.stringify(lightMode.value))
 }
-function exit(){useDataStore().userLogout(); router.push('/')}
+function exit(){router.push('/')}
 
 
 onMounted(() => {
