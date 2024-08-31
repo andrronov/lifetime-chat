@@ -4,7 +4,7 @@
     <div class="grid grid-cols-3 gap-8">
       <div v-for="(profile, index) in profiles" :key="index" @click="selectProfile(profile)" class="flex flex-row items-center justify-between gap-8 p-4 border-2 rounded-lg border-gray-800 cursor-pointer hover:bg-indigo-800 hover:text-white hover:scale-110 transition-transform duration-300 ease-in-out">
          <p class="text-lg">{{ profile.name }}</p>
-         <img :src="profile.img" class="w-12 h-12" alt="avatar">
+         <img :src="profile.img" class="hidden sm:block w-12 h-12" alt="avatar">
       </div>
     </div>
   </div>
