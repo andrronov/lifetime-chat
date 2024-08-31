@@ -12,6 +12,7 @@
         />
         <p class="text-xl font-medium">{{ profiles[$route.params.id].name }}</p>
         <onlineIndicator :is-online="isOnline" />
+        <img v-if="isTyping" src="/icons/pen.svg" class="w-7 h-7" alt="pen icon">
       </div>
 
       <div
@@ -60,13 +61,14 @@
 </template>
 
 <script setup>
-import { watchEffect, onMounted, onBeforeUnmount, computed, ref, watch } from "vue";
 import wrapperComponent from "../components/wrapperComponent.vue";
 import onlineIndicator from "../components/UI/onlineIndicator.vue";
-import { profiles } from "../../data/profiles";
 import socket from "../socket/index.js";
+import { watchEffect, onMounted, onBeforeUnmount, computed, ref, watch } from "vue";
+import { profiles } from "../../data/profiles";
 import { useDataStore } from "../store";
 import { useRoute, useRouter } from "vue-router";
+import { watchDebounced } from '@vueuse/core'
 
 const router = useRouter();
 const route = useRoute();
@@ -74,6 +76,11 @@ const store = useDataStore();
 const input = ref("");
 const chatView = ref(null);
 const inputview = ref(null);
+const isTyping = ref(false)
+
+watchDebounced(input, () => {
+   socket.send(JSON.stringify({type: 'msg', method: 'typing', user: route.params.id}))
+},{ debounce: 500, maxWait: 1000 })
 
 const isOnline = computed(() =>
   store.$state.onlineUsers.includes(Number(route.params.id))
@@ -152,6 +159,12 @@ watchEffect(() => {
       case "chatMessages":
         store.setMessages(parsedMessage.msgs);
         break;
+      case "typing":
+         isTyping.value = true
+         setTimeout(() => {
+            isTyping.value = false
+         }, 2500);
+        break;
       case "abort":
         sessionStorage.setItem("error", JSON.stringify(store.$state.user.id));
         router.push("error");
@@ -171,6 +184,7 @@ watchEffect(() => {
 });
 
 watch(route, () => {
+   input.value = ''
   const chatId = getChatId(store.$state.user.id, route.params.id);
   socket.send(
     JSON.stringify({

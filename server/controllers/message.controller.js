@@ -3,12 +3,6 @@ class MessageController {
       this.messages = new Map()
    }
 
-   broadcastMessage(aWss, ws, message, users){
-      aWss.clients.forEach(client => {
-         if(users.find(user => user == client.id)) client.send(JSON.stringify(message))
-      })
-   }
-
    handleMessage(aWss, ws, message){
       const msg = JSON.parse(message)
       switch (msg.method) {
@@ -28,6 +22,9 @@ class MessageController {
                this.setMessageAndBroadcast(msg, chatMessages, aWss)
             }
             break;
+         case 'typing':
+            this.broadcastMessage(aWss, ws, {method: 'typing'}, [Number(msg.user)])
+         break;
       
          default:
             break;
@@ -50,6 +47,12 @@ class MessageController {
          chatId: data.chatId
       }
       this.broadcastMessage(aWss, null, messageAPI, data.users)
+   }
+
+   broadcastMessage(aWss, ws, message, users){
+      aWss.clients.forEach(client => {
+         if(users.find(user => user == client.id)) client.send(JSON.stringify(message))
+      })
    }
 }
 
