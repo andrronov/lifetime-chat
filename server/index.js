@@ -3,7 +3,7 @@ import expressWs from 'express-ws'
 import ConnectionController from './controllers/connection.controller.js';
 import MessageController from './controllers/message.controller.js';
 
-const PORT = process.env.PORT || 9999
+const PORT = process.env.PORT || 5172
 const app = express()
 const { getWss, app: wsApp } = expressWs(app)
 const aWss = getWss()

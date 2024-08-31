@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { useDataStore } from '../store';
 import leftSidebar from './UI/leftSidebar.vue';
 
 
@@ -11,7 +12,7 @@ const router = useRouter()
 function changeTheme(){
    lightMode.value = !lightMode.value; showModal.value = false; localStorage.setItem('userTheme', JSON.stringify(lightMode.value))
 }
-function exit(){window.location.reload(); router.push('/')}
+function exit(){useDataStore().userLogout(); router.push('/')}
 
 
 onMounted(() => {

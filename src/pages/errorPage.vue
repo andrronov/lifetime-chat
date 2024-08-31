@@ -14,6 +14,5 @@ const store = useDataStore()
 const isUserError = computed(() => sessionStorage.getItem('error'))
 onMounted(() => {
   if(isUserError.value) store.userLogout()
-  window.location.reload()
 })
 </script>
