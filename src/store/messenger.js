@@ -68,7 +68,7 @@ export const useMessengerStore = defineStore("messenger", () => {
   };
 
   const { status, data, send, open, close } = useWebSocket(
-    "ws://localhost:5172/",
+    import.meta.env.VITE_SOCKET_URL,
     {
       heartbeat: {
         interval: 20000,
