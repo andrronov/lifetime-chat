@@ -1,8 +1,16 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import { fileURLToPath, URL } from "node:url";
 
-// https://vitejs.dev/config/
+const resolve = (path) => {
+  return fileURLToPath(new URL(path, import.meta.url));
+};
+
 export default defineConfig({
-  build: {sourcemap: true},
   plugins: [vue()],
-})
+  resolve: {
+    alias: {
+      "@": resolve("./src"),
+    },
+  },
+});

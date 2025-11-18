@@ -1,20 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [],
-  darkMode: 'class',
+  darkMode: "class",
   theme: {
- 
     screens: {
       o: "1px",
       xs: "614px",
       sm: "1002px",
       md: "1022px",
       lg: "1092px",
-      xl: "1280px"
+      xl: "1280px",
     },
 
     extend: {
-
       colors: {
         dim: {
           50: "#5F99F7",
@@ -29,11 +27,8 @@ export default {
           900: "#15202b",
         },
       },
-
     },
   },
-  plugins: [
-    '@tailwindcss/forms'
-  ],
-  purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}']
-}
+  plugins: ["@tailwindcss/forms"],
+  purge: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
+};
